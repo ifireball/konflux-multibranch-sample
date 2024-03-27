@@ -12,16 +12,12 @@ RUN \
   echo echo "\"$(git branch --show-current)\"" > entrypoint.sh && \
   chmod +x entrypoint.sh
 
-FROM registry.access.redhat.com/ubi9/ubi-micro:9.3-15
-
 LABEL name="Branch exposing image"
 LABEL description="A container image that shows the branch it was built from"
 LABEL com.redhat.component="konflux-multibranch-sample"
 LABEL io.k8s.description="A container image that shows the branch it was built from"
 LABEL io.k8s.display-name="Branch exposing image"
 
-COPY --from=builder /src/entrypoint.sh /
 COPY LICENSE /licenses/
 
 USER 65532:65532
-ENTRYPOINT /entrypoint.sh
