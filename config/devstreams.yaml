@@ -1,0 +1,24 @@
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: konflux-multibranch-sample-v1-0-0
+spec:
+  project: konflux-multibranch-sample
+  template:
+    name: konflux-multibranch-sample-template
+    values:
+    - name: version
+      value: "v1.0.0"
+---
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStream
+metadata:
+  name: konflux-multibranch-sample-v2-0-0
+spec:
+  project: konflux-multibranch-sample
+  template:
+    name: konflux-multibranch-sample-template
+    values:
+    - name: version
+      value: "v2.0.0"

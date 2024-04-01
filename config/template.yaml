@@ -1,0 +1,49 @@
+apiVersion: projctl.konflux.dev/v1beta1
+kind: ProjectDevelopmentStreamTemplate
+metadata:
+  name: konflux-multibranch-sample-template
+spec:
+  project: konflux-multibranch-sample
+  variables:
+  - name: version
+    description: A version number for a new development stream
+  - name: versionName
+    description: A K8s-compliant name for the version
+    defaultValue: "{{hyphenize .version}}"
+
+  resources:
+  - apiVersion: appstudio.redhat.com/v1alpha1
+    kind: Application
+    metadata:
+      annotations:
+        application.thumbnail: "5"
+        finalizeCount: "0"
+      finalizers:
+      - spi.appstudio.redhat.com/remote-secrets
+      - application.appstudio.redhat.com/finalizer
+      name: "konflux-multibranch-sample-{{.versionName}}"
+    spec:
+      displayName: "konflux-multibranch-sample-{{.versionName}}"
+
+  - apiVersion: appstudio.redhat.com/v1alpha1
+    kind: Component
+    metadata:
+      annotations:
+        applicationFailCounter: "0"
+      finalizers:
+      - test.appstudio.openshift.io/component
+      - component.appstudio.redhat.com/finalizer
+      - image-controller.appstudio.openshift.io/image-repository
+      - image-registry-secret-sa-link.component.appstudio.openshift.io/finalizer
+      - pac.component.appstudio.openshift.io/finalizer
+      name: konflux-multibranch-sample-{{.versionName}}
+    spec:
+      application: "konflux-multibranch-sample-{{.versionName}}"
+      componentName: "konflux-multibranch-sample-{{.versionName}}"
+      source:
+        git:
+          context: ./
+          dockerfileUrl: Dockerfile
+          revision: "{{.version}}"
+          url: https://github.com/ifireball/konflux-multibranch-sample.git
+      targetPort: 8080

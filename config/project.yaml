@@ -1,0 +1,8 @@
+apiVersion: projctl.konflux.dev/v1beta1
+kind: Project
+metadata:
+  name: konflux-multibranch-sample
+spec:
+  displayName: "Multi-version demonstration sample project"
+  description: |
+    A sample project to demonstrate how to use the projects API.
